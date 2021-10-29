@@ -21,6 +21,7 @@ async function run() {
     const database = client.db("tourismWeb");
     const locationCollection = database.collection("locations");
     const packageCollection = database.collection("packages");
+    const imageCollection = database.collection("gallary");
 
     // GET API LOCATIONS
     app.get("/locations", async (req, res) => {
@@ -31,6 +32,12 @@ async function run() {
     // GET API PACKAGES
     app.get("/packages", async (req, res) => {
       const result = await packageCollection.find({}).toArray();
+      res.send(result);
+    });
+
+    // GET API IMAGES
+    app.get("/images", async (req, res) => {
+      const result = await imageCollection.find({}).toArray();
       res.send(result);
     });
   } finally {
