@@ -20,10 +20,17 @@ async function run() {
     console.log("Database Connected");
     const database = client.db("tourismWeb");
     const locationCollection = database.collection("locations");
+    const packageCollection = database.collection("packages");
 
-    // GET API
+    // GET API LOCATIONS
     app.get("/locations", async (req, res) => {
       const result = await locationCollection.find({}).toArray();
+      res.send(result);
+    });
+
+    // GET API PACKAGES
+    app.get("/packages", async (req, res) => {
+      const result = await packageCollection.find({}).toArray();
       res.send(result);
     });
   } finally {
