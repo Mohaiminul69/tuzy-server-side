@@ -54,6 +54,14 @@ async function run() {
       res.send(location);
     });
 
+    // GET ORDERS BY ID
+    app.get("/orderDetails/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      let location = await orderCollection.findOne(query);
+      res.send(location);
+    });
+
     // GET ORDERS BY USER EMAIL
     app.get("/myOrders/:email", async (req, res) => {
       const mail = req.params.email;
