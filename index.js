@@ -90,6 +90,19 @@ async function run() {
       const result = await orderCollection.find({}).toArray();
       res.send(result);
     });
+
+    // APPROVE BOOKING
+    app.put("/approveBooking/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const updateStatus = req.body;
+      const result = await orderCollection.updateOne(query, {
+        $set: {
+          status: updateStatus.status,
+        },
+      });
+      res.send(result);
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
