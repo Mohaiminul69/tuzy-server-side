@@ -84,6 +84,12 @@ async function run() {
       const result = await orderCollection.deleteOne(query);
       res.send(result);
     });
+
+    // GETTING ALL ORDERS FOR MANAGE
+    app.get("/manage", async (req, res) => {
+      const result = await orderCollection.find({}).toArray();
+      res.send(result);
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
