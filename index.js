@@ -54,6 +54,14 @@ async function run() {
       res.send(location);
     });
 
+    // GET ORDERS BY USER EMAIL
+    app.get("/myOrders/:email", async (req, res) => {
+      const email = req.params.id;
+      const query = { email: email };
+      let orders = await locationCollection.findOne(query);
+      res.send(orders);
+    });
+
     // Add Bookings API
     app.post("/bookings", async (req, res) => {
       const booking = req.body;
