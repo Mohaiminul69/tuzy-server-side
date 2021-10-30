@@ -76,6 +76,14 @@ async function run() {
       const result = await orderCollection.insertOne(booking);
       res.send(result);
     });
+
+    // CANCELING ORDER
+    app.delete("/deleteOrder", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await orderCollection.deleteOne(query);
+      res.send(result);
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
