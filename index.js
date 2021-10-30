@@ -56,9 +56,9 @@ async function run() {
 
     // GET ORDERS BY USER EMAIL
     app.get("/myOrders/:email", async (req, res) => {
-      const email = req.params.id;
-      const query = { email: email };
-      let orders = await locationCollection.findOne(query);
+      const mail = req.params.email;
+      const query = { email: mail };
+      const orders = await orderCollection.find(query).toArray();
       res.send(orders);
     });
 
