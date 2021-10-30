@@ -4,6 +4,7 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 const cors = require("cors");
+const ObjectId = require("mongodb").ObjectId;
 
 app.use(cors());
 app.use(express.json());
@@ -39,6 +40,14 @@ async function run() {
     app.get("/images", async (req, res) => {
       const result = await imageCollection.find({}).toArray();
       res.send(result);
+    });
+
+    // GET API FOR SINGLE DATA BY ID
+    app.get("/details/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const location = await locationCollection.findOne(query);
+      res.send(location);
     });
   } finally {
     // Ensures that the client will close when you finish/error
