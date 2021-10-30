@@ -46,7 +46,10 @@ async function run() {
     app.get("/details/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
-      const location = await locationCollection.findOne(query);
+      let location = await locationCollection.findOne(query);
+      if (!location) {
+        location = await packageCollection.findOne(query);
+      }
       res.send(location);
     });
   } finally {
