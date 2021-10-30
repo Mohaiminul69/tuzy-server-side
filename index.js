@@ -23,6 +23,7 @@ async function run() {
     const locationCollection = database.collection("locations");
     const packageCollection = database.collection("packages");
     const imageCollection = database.collection("gallary");
+    const orderCollection = database.collection("orders");
 
     // GET API LOCATIONS
     app.get("/locations", async (req, res) => {
@@ -51,6 +52,13 @@ async function run() {
         location = await packageCollection.findOne(query);
       }
       res.send(location);
+    });
+
+    // Add Bookings API
+    app.post("/bookings", async (req, res) => {
+      const booking = req.body;
+      const result = await orderCollection.insertOne(booking);
+      res.send(result);
     });
   } finally {
     // Ensures that the client will close when you finish/error
