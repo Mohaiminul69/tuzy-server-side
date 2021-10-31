@@ -124,23 +124,12 @@ async function run() {
       res.send(result);
     });
 
-    // GET API FOR SINGLE DATA BY ID
-    app.get("/details/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: ObjectId(id) };
-      let location = await locationCollection.findOne(query);
-      if (!location) {
-        location = await packageCollection.findOne(query);
-      }
-      res.send(location);
-    });
-
     // DELETING A TOUR
     app.delete("/deleteTour/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       let result = await locationCollection.deleteOne(query);
-      if (!result) {
+      if (result.acknowledged === true && result.deletedCount === 0) {
         result = await packageCollection.deleteOne(query);
       }
       res.send(result);
