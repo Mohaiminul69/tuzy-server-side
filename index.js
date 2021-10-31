@@ -58,7 +58,7 @@ async function run() {
     app.get("/orderDetails/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
-      let location = await orderCollection.findOne(query);
+      const location = await orderCollection.findOne(query);
       res.send(location);
     });
 
@@ -101,6 +101,18 @@ async function run() {
           status: updateStatus.status,
         },
       });
+      res.send(result);
+    });
+
+    // CREATE NEW TOUR/PACKAGE
+    app.post("/addTour", async (req, res) => {
+      const tour = req.body;
+      let result;
+      if (tour.type === "tour") {
+        result = await locationCollection.insertOne(tour);
+      } else {
+        result = await packageCollection.insertOne(tour);
+      }
       res.send(result);
     });
   } finally {
