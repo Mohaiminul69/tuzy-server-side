@@ -115,6 +115,14 @@ async function run() {
       }
       res.send(result);
     });
+
+    // GETTING ALL THE TOURS FROM BOTH DATABASE
+    app.get("/allTour", async (req, res) => {
+      const tours = await locationCollection.find({}).toArray();
+      const packages = await packageCollection.find({}).toArray();
+      result = [...tours, ...packages];
+      res.send(result);
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
